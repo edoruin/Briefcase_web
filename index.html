@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Briefcase</title>
+<link rel="icon" type="image/jpeg" href="assets/logo-briefcase.jpg">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#e5e2dd",
+                        "outline-variant": "#d5c3ba",
+                        "on-primary-fixed": "#311301",
+                        "on-tertiary-fixed": "#1c1c19",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#303031",
+                        "primary-fixed": "#ffdbc9",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#c9c6c2",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#80543a",
+                        "on-surface": "#1b1c1c",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-secondary-fixed-variant": "#474746",
+                        "primary-fixed-dim": "#f4ba99",
+                        "tertiary": "#52514d",
+                        "tertiary-container": "#6a6965",
+                        "surface-bright": "#fbf9f8",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f2f0f0",
+                        "surface-variant": "#e4e2e2",
+                        "surface-dim": "#dbdad9",
+                        "secondary-fixed": "#e5e2e1",
+                        "primary-container": "#8c5e43",
+                        "on-secondary-container": "#636262",
+                        "on-primary": "#ffffff",
+                        "primary": "#70472d",
+                        "on-error-container": "#93000a",
+                        "surface": "#fbf9f8",
+                        "on-background": "#1b1c1c",
+                        "on-primary-container": "#ffe4d6",
+                        "on-error": "#ffffff",
+                        "secondary": "#5f5e5e",
+                        "on-primary-fixed-variant": "#653d24",
+                        "outline": "#83746c",
+                        "background": "#fbf9f8",
+                        "secondary-container": "#e2dfde",
+                        "surface-container": "#efeded",
+                        "on-tertiary-container": "#ece9e4",
+                        "inverse-primary": "#f4ba99",
+                        "surface-container-highest": "#e4e2e2",
+                        "surface-container-high": "#e9e8e7",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#51443d",
+                        "on-tertiary-fixed-variant": "#474743",
+                        "surface-container-low": "#f5f3f3"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Libre Caslon Text", "serif"],
+                        "body-lg": ["Manrope", "sans-serif"],
+                        "display-lg": ["Libre Caslon Text", "serif"],
+                        "headline-sm": ["Libre Caslon Text", "serif"],
+                        "headline-lg-mobile": ["Libre Caslon Text", "serif"],
+                        "headline-lg": ["Libre Caslon Text", "serif"],
+                        "label-md": ["Manrope", "sans-serif"],
+                        "body-md": ["Manrope", "sans-serif"]
+                    },
+                    fontSize: {
+                        "headline-md": ["32px", { lineHeight: "1.3", fontWeight: "400" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "display-lg": ["64px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "400" }],
+                        "headline-sm": ["24px", { lineHeight: "1.4", fontWeight: "400" }],
+                        "headline-lg-mobile": ["36px", { lineHeight: "1.2", fontWeight: "400" }],
+                        "headline-lg": ["48px", { lineHeight: "1.2", fontWeight: "400" }],
+                        "label-md": ["14px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .ghost-outline {
+                @apply border border-outline-variant/30 transition-colors duration-300;
+            }
+            .ghost-outline:hover {
+                @apply border-outline/50;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 border-b border-outline-variant/30 bg-surface/80 backdrop-blur-md">
+<div class="flex justify-between items-center h-20 px-gutter max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-primary flex items-center justify-center hover:bg-surface-variant p-2 rounded-full transition-colors" id="mobile-menu-btn">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="flex items-center gap-2 text-primary font-headline-md tracking-tighter">
+<span class="material-symbols-outlined text-2xl">piano</span>
+<span>BRIEFCASE</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<a aria-label="YouTube Channel" class="hidden md:inline-flex w-10 h-10 rounded-full border border-outline-variant/50 items-center justify-center text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors" href="https://www.youtube.com/channel/UC3-Z9MrLyrkCPDmRz1o_nPQ">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+</a>
+<button class="font-label-md text-xs uppercase tracking-widest px-3 py-2 rounded-full border border-outline-variant/50 text-on-surface-variant hover:bg-surface-variant transition-colors lang-btn" onclick="toggleLang()">EN</button>
+<a class="hidden md:inline-flex bg-primary text-on-primary font-label-md px-6 py-3 rounded-full hover:bg-on-primary-fixed transition-colors uppercase tracking-widest text-xs" href="#book">
+<span class="lang-es">Rellenar Solicitud</span>
+<span class="lang-en hidden">Apply Now</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Mobile Drawer (Hidden by default) -->
+<div class="fixed inset-y-0 left-0 z-[60] h-full w-80 bg-surface shadow-xl border-r border-outline-variant/20 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col" id="mobile-drawer">
+<div class="p-6 border-b border-outline-variant/20 flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm text-primary">Briefcase</h2>
+<button class="font-label-md text-xs uppercase tracking-widest px-3 py-1.5 rounded-full border border-outline-variant/50 text-on-surface-variant hover:bg-surface-variant transition-colors lang-btn" onclick="toggleLang()">EN</button>
+<button class="text-secondary p-2" id="close-menu-btn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<nav class="flex flex-col py-4 flex-1 overflow-y-auto">
+<a class="bg-primary-container/10 text-primary font-bold border-l-4 border-primary p-4 flex items-center gap-4 hover:bg-tertiary-fixed/20 transition-colors" href="#hero">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md text-label-md"><span class="lang-es">Inicio</span><span class="lang-en hidden">Home</span></span>
+</a>
+<a class="text-secondary p-4 flex items-center gap-4 hover:bg-tertiary-fixed/20 transition-colors" href="#classes">
+<span class="material-symbols-outlined">piano</span>
+<span class="font-label-md text-label-md"><span class="lang-es">Clases</span><span class="lang-en hidden">Classes</span></span>
+</a>
+<a class="text-secondary p-4 flex items-center gap-4 hover:bg-tertiary-fixed/20 transition-colors" href="#about">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label-md text-label-md"><span class="lang-es">Nosotros</span><span class="lang-en hidden">About Us</span></span>
+</a>
+<a class="text-secondary p-4 flex items-center gap-4 hover:bg-tertiary-fixed/20 transition-colors" href="#book">
+<span class="material-symbols-outlined">chat</span>
+<span class="font-label-md text-label-md"><span class="lang-es">Solicitud</span><span class="lang-en hidden">Apply</span></span>
+</a>
+<!-- Contact section inside drawer -->
+<div class="border-t border-outline-variant/20 mt-auto">
+<div class="p-4 flex gap-3 justify-center">
+<a aria-label="WhatsApp" class="w-10 h-10 rounded-full border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors" href="https://wa.me/18292879164" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<a aria-label="YouTube Channel" class="w-10 h-10 rounded-full border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors" href="https://www.youtube.com/channel/UC3-Z9MrLyrkCPDmRz1o_nPQ">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+</a>
+</div>
+<a class="flex items-center justify-center gap-2 bg-primary text-on-primary font-label-md text-xs uppercase tracking-widest px-6 py-3 rounded-full hover:bg-on-primary-fixed transition-colors shadow-sm mx-4 mb-4" href="#book">
+<span class="material-symbols-outlined text-lg">send</span>
+<span class="lang-es">Rellenar Solicitud</span>
+<span class="lang-en hidden">Apply Now</span>
+</a>
+</div>
+</nav>
+</div>
+<!-- Drawer Overlay -->
+<div class="fixed inset-0 bg-on-background/20 backdrop-blur-sm z-[55] hidden transition-opacity md:hidden" id="drawer-overlay"></div>
+<main>
+<!-- Hero Section -->
+<section class="pt-[160px] pb-[128px] lg:pt-[200px] lg:pb-[160px] relative overflow-hidden" id="hero">
+<!-- Subtle background tonal layer -->
+<div class="absolute inset-0 bg-surface-container-lowest -z-10 w-full h-[80%] rounded-b-[4rem]"></div>
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+<!-- Text Content -->
+<div class="lg:col-span-5 flex flex-col gap-8 order-2 lg:order-1">
+<img alt="Briefcase Logo" class="w-24 h-24 object-cover rounded-full ghost-outline p-1 mb-4" src="assets/logo-briefcase.jpg"/>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-display-lg md:text-display-lg text-on-surface">
+<span class="lang-es">Domina los fundamentos del instrumento</span>
+<span class="lang-en hidden">Master the fundamentals of the instrument</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">
+<span class="lang-es">Clases de piano privadas, adaptadas a tu nivel. Online o presenciales todos los sábados.</span>
+<span class="lang-en hidden">Private piano lessons, tailored to your level. Online or in-person every Saturday.</span>
+</p>
+<div class="pt-4 flex gap-4">
+<a class="inline-flex items-center justify-center bg-primary text-on-primary font-label-md uppercase tracking-widest px-8 py-4 rounded-full hover:bg-on-primary-fixed transition-colors shadow-sm" href="#book">
+<span class="lang-es">Reservar Clase</span>
+<span class="lang-en hidden">Book a Class</span>
+</a>
+<a class="inline-flex items-center justify-center bg-transparent border border-outline text-on-surface font-label-md uppercase tracking-widest px-8 py-4 rounded-full hover:bg-surface-variant transition-colors" href="#classes">
+<span class="lang-es">Ver Horarios</span>
+<span class="lang-en hidden">See Schedule</span>
+</a>
+</div>
+</div>
+<!-- Video Placeholder -->
+<div class="lg:col-span-7 order-1 lg:order-2">
+<div class="relative w-full aspect-video bg-tertiary-fixed rounded-xl overflow-hidden group ghost-outline">
+<video id="hero-video" class="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" autoplay loop muted playsinline src="assets/turkishmarch.mp4"></video>
+<div id="sound-indicator" class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-300">
+<span id="sound-icon" class="material-symbols-outlined text-6xl drop-shadow-lg text-on-surface">volume_off</span>
+</div>
+</div>
+<p id="video-sound-hint" class="text-center text-on-surface-variant font-label-md uppercase tracking-widest text-xs mt-4 opacity-60 cursor-pointer">
+    Haz clic para activar el sonido
+</p>
+<p class="text-center text-on-surface-variant font-label-md uppercase tracking-widest text-xs mt-6 opacity-70">
+                        <span class="lang-es">Explora el método Briefcase</span>
+<span class="lang-en hidden">Explore the Briefcase method</span>
+                    </p>
+</div>
+</div>
+</section>
+<!-- Classes Section -->
+<section class="py-[128px] bg-surface relative" id="classes">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="mb-20 text-center lg:text-left max-w-2xl">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4"><span class="lang-es">Modalidades de Estudio</span><span class="lang-en hidden">Study Modalities</span></h2>
+<div class="w-16 h-[1px] bg-primary/30 mx-auto lg:mx-0"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+<!-- Online Card -->
+<div class="bg-surface-container-lowest ghost-outline rounded-2xl p-10 lg:p-12 flex flex-col hover:-translate-y-1 transition-transform duration-300">
+<div class="flex justify-between items-start mb-8">
+<div class="p-3 bg-surface-variant rounded-full text-primary">
+<span class="material-symbols-outlined text-3xl">laptop_mac</span>
+</div>
+<span class="font-label-md text-xs uppercase tracking-widest bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full"><span class="lang-es">Remoto</span><span class="lang-en hidden">Remote</span></span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2"><span class="lang-es">Clases Online</span><span class="lang-en hidden">Online Classes</span></h3>
+<p class="font-body-md text-on-surface-variant mb-8 flex-grow">
+<span class="lang-es">Sesiones enfocadas a través de Google Meet. Ideales para mantener el ritmo desde cualquier lugar.</span>
+<span class="lang-en hidden">Focused sessions via Google Meet. Ideal for keeping pace from anywhere.</span>
+</p>
+<div class="space-y-4 mb-10">
+<div class="flex items-center gap-4 text-on-surface">
+<span class="material-symbols-outlined text-outline text-sm">calendar_today</span>
+<span class="font-body-md"><span class="lang-es">Sábados</span><span class="lang-en hidden">Saturdays</span></span>
+</div>
+<div class="flex items-center gap-4 text-on-surface">
+<span class="material-symbols-outlined text-outline text-sm">schedule</span>
+<span class="font-body-md">9:00 AM - 11:00 AM</span>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/30 flex items-end justify-between">
+<div>
+<p class="font-label-md text-xs uppercase text-on-surface-variant mb-1"><span class="lang-es">Inversión por clase</span><span class="lang-en hidden">Investment per class</span></p>
+<p class="font-headline-sm text-headline-sm text-on-surface">150 <span class="text-sm font-body-md text-on-surface-variant">DOP</span></p>
+</div>
+</div>
+</div>
+<!-- In-Person Card -->
+<div class="bg-surface-container-lowest ghost-outline rounded-2xl p-10 lg:p-12 flex flex-col hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
+<!-- Subtle accent element -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-10"></div>
+<div class="flex justify-between items-start mb-8">
+<div class="p-3 bg-surface-variant rounded-full text-primary">
+<span class="material-symbols-outlined text-3xl">chair_alt</span>
+</div>
+<span class="font-label-md text-xs uppercase tracking-widest bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full"><span class="lang-es">Presencial</span><span class="lang-en hidden">In-Person</span></span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2"><span class="lang-es">Clases Presenciales</span><span class="lang-en hidden">In-Person Classes</span></h3>
+<p class="font-body-md text-on-surface-variant mb-4">
+<span class="lang-es">Práctica inmersiva. Presenciales limitadas a ubicaciones cerca de la O&amp;M, La Romana. Ideal si tienes piano en casa.<br>De no tener piano, el encuentro será en <a class="text-primary underline hover:text-primary-fixed transition-colors" href="https://maps.app.goo.gl/WYfFd7iqxM4PJtWb8" target="_blank" rel="noopener noreferrer">esta ubicación</a>.</span>
+<span class="lang-en hidden">Immersive practice. In-person limited to locations near O&amp;M, La Romana. Ideal if you have a piano at home.<br>If you don't have a piano, the meeting will be at <a class="text-primary underline hover:text-primary-fixed transition-colors" href="https://maps.app.goo.gl/WYfFd7iqxM4PJtWb8" target="_blank" rel="noopener noreferrer">this location</a>.</span>
+</p>
+<div class="space-y-4 mb-10 flex-grow">
+<div class="flex items-center gap-4 text-on-surface">
+<span class="material-symbols-outlined text-outline text-sm">calendar_today</span>
+<span class="font-body-md"><span class="lang-es">Sábados</span><span class="lang-en hidden">Saturdays</span></span>
+</div>
+<div class="flex items-center gap-4 text-on-surface">
+<span class="material-symbols-outlined text-outline text-sm">schedule</span>
+<span class="font-body-md">1:00 PM - 6:00 PM</span>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/30 flex items-end justify-between">
+<div>
+<p class="font-label-md text-xs uppercase text-on-surface-variant mb-1"><span class="lang-es">Inversión por clase</span><span class="lang-en hidden">Investment per class</span></p>
+<p class="font-headline-sm text-headline-sm text-on-surface">300 <span class="text-sm font-body-md text-on-surface-variant">DOP</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="py-[128px] lg:py-[160px] bg-surface-container-low relative" id="about">
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+<div class="md:col-span-5 relative">
+<div class="aspect-[3/4] bg-tertiary-fixed rounded-sm overflow-hidden relative shadow-2xl shadow-on-background/5">
+<img class="w-full h-full object-cover" data-alt="Abstract, textured painting showing a close-up of piano keys and hands, highly artistic, impressionistic style with thick brushstrokes. Colors are muted earth tones, blacks, and whites, matching the Briefcase brand aesthetic. Minimalist and profound." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAErwObgNAV2c7Z-o2Hp2hlZRmYUXeC3hvGNi5N5c0mr8FDhflf_RCAjCWOvE80aZFx2u5DiOejjoGikT0kXXL-PQUkTA9MmvQuEAGDXSMUcN9Wpnxl79XS-RumGBK53gsupvxTCjOCHP9Pep9on3rBaw9Wmx4ahqjFbJ9WSqPxOjwQizr9RqliUnx29MZSoABX2o1l1urJg9CwA5Q5ZCpFDguQHr2Aqo8HlkX2sNErtTJQfmocnJhqcu8xgzh5f_KXxlnaCP8VK-M"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+</div>
+</div>
+<div class="md:col-span-6 md:col-start-7 flex flex-col gap-8">
+<h2 class="font-headline-md text-headline-md text-on-surface relative">
+<span class="absolute -top-12 -left-8 text-[120px] text-outline-variant/20 font-display-lg select-none">B</span>
+<span class="lang-es">El Origen de Briefcase</span>
+<span class="lang-en hidden">The Origin of Briefcase</span>
+</h2>
+<div class="font-body-lg text-on-surface-variant space-y-6">
+<p>
+<span class="lang-es">Concebido originalmente como un archivo creativo personal, Briefcase evolucionó hasta convertirse en un proyecto de enseñanza dedicado.</span>
+<span class="lang-en hidden">Originally conceived as a personal creative archive, Briefcase evolved into a dedicated teaching project.</span>
+</p>
+<p>
+<span class="lang-es">Pienso que el piano no es solo un instrumento, sino una herramienta para la disciplina intelectual y el desarrollo cognitivo. Ofrezco un espacio donde la teoría musical se encuentra con la práctica tangible.</span>
+<span class="lang-en hidden">I believe the piano is not just an instrument, but a tool for intellectual discipline and cognitive development. I offer a space where music theory meets tangible practice.</span>
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Registration Form Section -->
+<section class="py-[128px] bg-surface relative overflow-hidden" id="book">
+<div class="absolute inset-0 border-t border-outline-variant/20 w-full"></div>
+<div class="max-w-container-max mx-auto px-gutter relative z-10">
+<div class="md:grid md:grid-cols-5 gap-12 items-start">
+<!-- Form Column -->
+<div class="md:col-span-3">
+<div class="bg-surface-container-lowest ghost-outline rounded-2xl p-10 lg:p-12">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2"><span class="lang-es">Formulario de Solicitud</span><span class="lang-en hidden">Application Form</span></h2>
+<p class="font-body-md text-on-surface-variant mb-8"><span class="lang-es">Completa tus datos y te contactaré para cerrar el trato.</span><span class="lang-en hidden">Fill in your details and I'll contact you to seal the deal.</span></p>
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSc_jXn1SxNZ-TObu2IrfOjlh6y1aSU_s1y-CIFrBu0gH_yehQ/formResponse?embedded=true" target="_self" method="POST" class="flex flex-col gap-6">
+<div>
+<label class="font-label-md text-xs uppercase tracking-widest text-on-surface-variant mb-2 block"><span class="lang-es">Nombre</span><span class="lang-en hidden">Name</span> <span class="text-error">*</span></label>
+<input class="w-full bg-transparent border border-outline-variant/50 rounded-lg px-4 py-3 font-body-md text-on-surface focus:outline-none focus:border-primary transition-colors" type="text" name="entry.27857639" required>
+</div>
+<div>
+<label class="font-label-md text-xs uppercase tracking-widest text-on-surface-variant mb-2 block"><span class="lang-es">Edad</span><span class="lang-en hidden">Age</span> <span class="text-error">*</span></label>
+<input class="w-full bg-transparent border border-outline-variant/50 rounded-lg px-4 py-3 font-body-md text-on-surface focus:outline-none focus:border-primary transition-colors" type="text" inputmode="numeric" pattern="[0-9]*" title="Solo se permiten números" data-en-title="Numbers only" name="entry.1148800299" required>
+</div>
+<div>
+<label class="font-label-md text-xs uppercase tracking-widest text-on-surface-variant mb-2 block"><span class="lang-es">Contacto</span><span class="lang-en hidden">Contact</span> <span class="text-error">*</span></label>
+<input class="w-full bg-transparent border border-outline-variant/50 rounded-lg px-4 py-3 font-body-md text-on-surface focus:outline-none focus:border-primary transition-colors" type="text" name="entry.1795645545" required>
+</div>
+<div>
+<label class="font-label-md text-xs uppercase tracking-widest text-on-surface-variant mb-2 block"><span class="lang-es">Residencia</span><span class="lang-en hidden">Residence</span> <span class="text-error">*</span></label>
+<input class="w-full bg-transparent border border-outline-variant/50 rounded-lg px-4 py-3 font-body-md text-on-surface focus:outline-none focus:border-primary transition-colors" type="text" name="entry.366396932" required>
+</div>
+<div>
+<label class="font-label-md text-xs uppercase tracking-widest text-on-surface-variant mb-3 block"><span class="lang-es">Nivel de Experiencia con el instrumento</span><span class="lang-en hidden">Experience Level with the instrument</span> <span class="text-error">*</span></label>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-3 p-3 ghost-outline rounded-lg cursor-pointer hover:bg-surface-variant/30 transition-colors">
+<input class="text-primary focus:ring-primary" type="radio" name="entry.1237244463" value="Basico(me se los acordes y las escalas mayores)" required>
+<span class="font-body-md text-on-surface"><span class="lang-es">Básico (me sé los acordes y las escalas mayores)</span><span class="lang-en hidden">Basic (I know chords and major scales)</span></span>
+</label>
+<label class="flex items-center gap-3 p-3 ghost-outline rounded-lg cursor-pointer hover:bg-surface-variant/30 transition-colors">
+<input class="text-primary focus:ring-primary" type="radio" name="entry.1237244463" value="Intermedio(toco canciones y interpreto piezas de nivel intermedio)" required>
+<span class="font-body-md text-on-surface"><span class="lang-es">Intermedio (toco canciones y piezas de nivel intermedio)</span><span class="lang-en hidden">Intermediate (I play songs and intermediate pieces)</span></span>
+</label>
+</div>
+</div>
+<div>
+<label class="font-label-md text-xs uppercase tracking-widest text-on-surface-variant mb-3 block"><span class="lang-es">Estás interesado en las clases:</span><span class="lang-en hidden">Are you interested in classes:</span> <span class="text-error">*</span></label>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-3 p-3 ghost-outline rounded-lg cursor-pointer hover:bg-surface-variant/30 transition-colors">
+<input class="text-primary focus:ring-primary" type="radio" name="entry.1284211558" value="Virtuales" required>
+<span class="font-body-md text-on-surface"><span class="lang-es">Virtuales</span><span class="lang-en hidden">Online</span></span>
+</label>
+<label class="flex items-center gap-3 p-3 ghost-outline rounded-lg cursor-pointer hover:bg-surface-variant/30 transition-colors">
+<input class="text-primary focus:ring-primary" type="radio" name="entry.1284211558" value="Presenciales" required>
+<span class="font-body-md text-on-surface"><span class="lang-es">Presenciales</span><span class="lang-en hidden">In-Person</span></span>
+</label>
+<label class="flex items-center gap-3 p-3 ghost-outline rounded-lg cursor-pointer hover:bg-surface-variant/30 transition-colors">
+<input class="text-primary focus:ring-primary" type="radio" name="entry.1284211558" value="Ambas" required>
+<span class="font-body-md text-on-surface"><span class="lang-es">Ambas</span><span class="lang-en hidden">Both</span></span>
+</label>
+</div>
+</div>
+<div>
+<label class="font-label-md text-xs uppercase tracking-widest text-on-surface-variant mb-2 block"><span class="lang-es">¿Qué esperas aprender?</span><span class="lang-en hidden">What do you hope to learn?</span> <span class="text-error">*</span></label>
+<textarea class="w-full bg-transparent border border-outline-variant/50 rounded-lg px-4 py-3 font-body-md text-on-surface focus:outline-none focus:border-primary transition-colors min-h-[100px]" name="entry.1669061282" required></textarea>
+</div>
+<div>
+<label class="font-label-md text-xs uppercase tracking-widest text-on-surface-variant mb-2 block"><span class="lang-es">¿Qué te interesó aprender? No tiene que ser algo noble, saca lo que tienes adentro</span><span class="lang-en hidden">What sparked your interest to learn? It doesn't have to be noble, let out what's inside you</span> <span class="text-on-surface-variant/50 text-[10px]">(<span class="lang-es">Opcional</span><span class="lang-en hidden">Optional</span>)</span></label>
+<textarea class="w-full bg-transparent border border-outline-variant/50 rounded-lg px-4 py-3 font-body-md text-on-surface focus:outline-none focus:border-primary transition-colors min-h-[80px]" name="entry.1478843311"></textarea>
+</div>
+<div class="pt-4">
+<button class="w-full inline-flex items-center justify-center gap-3 bg-primary text-on-primary font-label-md uppercase tracking-widest px-8 py-4 rounded-full hover:bg-on-primary-fixed transition-colors shadow-md hover:shadow-lg" type="submit">
+<span class="material-symbols-outlined">send</span>
+<span class="lang-es">Enviar Solicitud</span>
+<span class="lang-en hidden">Submit Application</span>
+</button>
+</div>
+<input type="hidden" name="fvv" value="1">
+<input type="hidden" name="partialResponse" value="[null,null,&quot;5843422083066694492&quot;]">
+<input type="hidden" name="pageHistory" value="0">
+<input type="hidden" name="fbzx" value="5843422083066694492">
+<input type="hidden" name="submissionTimestamp" value="-1">
+</form>
+</div>
+</div>
+<!-- WhatsApp Support Column -->
+<div class="md:col-span-2 mt-8 md:mt-0">
+<div class="bg-surface-container-lowest ghost-outline rounded-2xl p-10 lg:p-12 flex flex-col items-center text-center sticky top-28">
+<div class="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-3xl">chat</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-4"><span class="lang-es">¿Necesitas ayuda?</span><span class="lang-en hidden">Need help?</span></h3>
+<p class="font-body-md text-on-surface-variant mb-8">
+<span class="lang-es">Si tienes dudas o problemas con el formulario, contáctame directamente por WhatsApp.</span>
+<span class="lang-en hidden">If you have questions or issues with the form, contact me directly on WhatsApp.</span>
+</p>
+<a class="inline-flex items-center gap-3 bg-primary text-on-primary font-label-md uppercase tracking-widest px-8 py-4 rounded-full hover:bg-on-primary-fixed transition-colors shadow-md hover:shadow-lg" href="https://wa.me/18292879164" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined">chat</span>
+<span class="lang-es">contactame si necesitas soporte tecnico</span>
+<span class="lang-en hidden">contact me if you need technical support</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-inverse-surface border-t border-outline-variant/20 full-width py-16">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 px-gutter max-w-container-max mx-auto">
+<!-- Brand / Copyright -->
+<div class="flex flex-col gap-6">
+<span class="font-headline-sm text-headline-sm text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined">piano</span> BRIEFCASE
+                </span>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs">
+                    © 2026 Briefcase Piano Lessons.
+                </p>
+</div>
+<!-- Links -->
+<div class="flex flex-col gap-4">
+<h4 class="font-label-md text-label-md uppercase tracking-widest text-on-surface mb-2"><span class="lang-es">Explorar</span><span class="lang-en hidden">Explore</span></h4>
+<nav class="flex flex-col gap-3">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all duration-200 w-fit" href="#hero"><span class="lang-es">INICIO</span><span class="lang-en hidden">HOME</span></a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all duration-200 w-fit" href="#">Pricing</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all duration-200 w-fit" href="#">Origins</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all duration-200 w-fit" href="#">Contact</a>
+</nav>
+</div>
+<!-- Social / Actions -->
+<div class="flex flex-col gap-4 md:items-end">
+<h4 class="font-label-md text-label-md uppercase tracking-widest text-on-surface mb-2"><span class="lang-es">Conectar</span><span class="lang-en hidden">Connect</span></h4>
+<div class="flex gap-4">
+<!-- WhatsApp Icon with number -->
+<a aria-label="WhatsApp" class="w-12 h-12 rounded-full border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors" href="https://wa.me/18292879164" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<!-- YouTube Icon -->
+<a aria-label="YouTube Channel" class="w-12 h-12 rounded-full border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors" href="https://www.youtube.com/channel/UC3-Z9MrLyrkCPDmRz1o_nPQ">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Simple JS for Mobile Menu -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const drawer = document.getElementById('mobile-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const links = drawer.querySelectorAll('a');
+
+            function toggleMenu() {
+                const isOpen = !drawer.classList.contains('-translate-x-full');
+                if (isOpen) {
+                    drawer.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('block');
+                } else {
+                    drawer.classList.remove('-translate-x-full');
+                    overlay.classList.remove('hidden');
+                    overlay.classList.add('block');
+                }
+            }
+
+            menuBtn.addEventListener('click', toggleMenu);
+            closeBtn.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+            
+            links.forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('hero-video');
+            const hint = document.getElementById('video-sound-hint');
+            const indicator = document.getElementById('sound-indicator');
+            const icon = document.getElementById('sound-icon');
+            let fadeTimer = null;
+
+            const showIndicator = (isMuted) => {
+                icon.textContent = isMuted ? 'volume_off' : 'volume_up';
+                indicator.classList.remove('opacity-0');
+                indicator.classList.add('opacity-100');
+                clearTimeout(fadeTimer);
+                fadeTimer = setTimeout(() => {
+                    indicator.classList.remove('opacity-100');
+                    indicator.classList.add('opacity-0');
+                }, 800);
+            };
+
+            const toggleSound = () => {
+                video.muted = !video.muted;
+                if (window.updateVideoHint) window.updateVideoHint();
+                showIndicator(video.muted);
+            };
+
+            video.addEventListener('click', toggleSound);
+            hint.addEventListener('click', toggleSound);
+        });
+    </script>
+    <script>
+        (function() {
+            var LANG_KEY = 'briefcase-lang';
+
+            function detectLang() {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('lang') || localStorage.getItem(LANG_KEY) || 'es';
+            }
+
+            function setLanguage(lang) {
+                if (lang !== 'es' && lang !== 'en') lang = 'es';
+                document.documentElement.lang = lang;
+
+                document.querySelectorAll('.lang-es').forEach(function(el) { el.classList.toggle('hidden', lang !== 'es'); });
+                document.querySelectorAll('.lang-en').forEach(function(el) { el.classList.toggle('hidden', lang !== 'en'); });
+
+                var toggleText = lang === 'es' ? 'EN' : 'ES';
+                document.querySelectorAll('.lang-btn').forEach(function(btn) { btn.textContent = toggleText; });
+
+                document.querySelectorAll('[data-en-title]').forEach(function(el) {
+                    if (lang === 'en') {
+                        el.dataset.originalTitle = el.title;
+                        el.title = el.dataset.enTitle;
+                    } else if (el.dataset.originalTitle) {
+                        el.title = el.dataset.originalTitle;
+                    }
+                });
+
+                if (window.updateVideoHint) window.updateVideoHint();
+
+                localStorage.setItem(LANG_KEY, lang);
+                var url = new URL(window.location);
+                url.searchParams.set('lang', lang);
+                history.replaceState(null, '', url);
+            }
+
+            window.updateVideoHint = function() {
+                var hint = document.getElementById('video-sound-hint');
+                var video = document.getElementById('hero-video');
+                if (!hint || !video) return;
+                var lang = document.documentElement.lang;
+                if (lang === 'en') {
+                    hint.innerText = video.muted ? 'Click to enable sound' : 'Click to disable sound';
+                } else {
+                    hint.innerText = video.muted ? 'Haz clic para activar el sonido' : 'Haz clic para desactivar el sonido';
+                }
+            };
+
+            window.setLanguage = setLanguage;
+            window.toggleLang = function() {
+                var newLang = document.documentElement.lang === 'es' ? 'en' : 'es';
+                setLanguage(newLang);
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() { setLanguage(detectLang()); });
+            } else {
+                setLanguage(detectLang());
+            }
+        })();
+    </script>
+</body></html>
